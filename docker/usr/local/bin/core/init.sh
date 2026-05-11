@@ -5,11 +5,11 @@ code=0
 
 baseurl=${BASEURL=${CI_BASEURL}}
 apikey=${APIKEY=${CI_APIKEY}}
-haiku=${HAIKU_MODEL=${CI_HAIKU_MODEL="claude-sonnet-4-6"}}
-sonnet=${SONNET_MODEL=${CI_SONNET_MODEL="claude-sonnet-4-6"}}
-opus=${OPUS_MODEL=${CI_SONNET_MODEL="claude-sonnet-4-6"}}
-reasoning=${REASONING_MODEL=${CI_REASONING_MODEL="claude-sonnet-4-6"}}
-subagent=${SUBAGENT_MODEL=${CI_SUBAGENT_MODEL="claude-sonnet-4-6"}}
+haiku=${HAIKU=${CI_HAIKU="claude-sonnet-4-6"}}
+sonnet=${SONNET=${CI_SONNET="claude-sonnet-4-6"}}
+opus=${OPUS=${CI_SONNET="claude-sonnet-4-6"}}
+reasoning=${REASONING=${CI_REASONING="claude-sonnet-4-6"}}
+subagent=${SUBAGENT=${CI_SUBAGENT="claude-sonnet-4-6"}}
 model=${MODEL=${CI_MODEL=${sonnet}}}
 
 # 检查模型调用路径
