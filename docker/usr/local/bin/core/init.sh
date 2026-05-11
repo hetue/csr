@@ -19,7 +19,7 @@ if [[ "${baseurl}" == "" ]]; then
 fi
 if [ "${code}" -ne 0 ]; then
     echo ${exception}
-    return ${code}
+    exit ${code}
 fi
 
 # 检查模型调用密钥
@@ -29,7 +29,7 @@ if [[ "${apikey}" == "" ]]; then
 fi
 if [ "${code}" -ne 0 ]; then
     echo ${exception}
-    return ${code}
+    exit ${code}
 fi
 
 # 输出到控制台

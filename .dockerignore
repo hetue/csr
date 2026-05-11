@@ -1,0 +1,27 @@
+# Git
+.git
+.gitignore
+
+# IDE
+.idea
+.vscode
+*.swp
+*.swo
+*~
+
+# Claude Code
+.claude
+
+# Editor config
+.editorconfig
+
+# Documentation
+*.md
+!docker/**/*.md
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
