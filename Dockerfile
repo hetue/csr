@@ -7,7 +7,7 @@ LABEL author="storezhang<华寅>" \
     description="基于Claude Code中Security Review功能插件，可以将结果转换为PDF格式文件输出。"
 
 # 复制脚本程序
-COPY docker /docker
+COPY docker /
 
 
 # 模块存储目录
@@ -42,8 +42,6 @@ RUN set -ex \
     \
     && rm -rf /var/cache/apk/*
 
-# 修改默认参数
-ENV PLUGIN_TIMES 10
 
 # 执行命令
 ENTRYPOINT ["/usr/local/bin/csr.sh"]
