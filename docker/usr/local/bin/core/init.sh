@@ -29,6 +29,9 @@ if [ "${code}" -ne 0 ]; then
     exit ${code}
 fi
 
+# 创建临时目录
+mkdir --parent /tmp
+
 # 输出到控制台
 cat << EOF
 {
