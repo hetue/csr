@@ -1,0 +1,58 @@
+kind: secret
+name: password_ccr
+get:
+    path: secrets
+    name: password_ccr_ruijc_zongliang
+---
+
+
+kind: pipeline
+type: docker
+name: 发布
+
+
+clone:
+    disable: true
+
+
+environment:
+    GROUP: hetue
+    MODULE: csr
+    TAG: 0.0.$${DRONE_BUILD_NUMBER}
+    DESCRIPTION: 安全审核
+
+
+steps:
+    - name: 取码
+      image: ccr.ccs.tencentyun.com/hetue/git
+      pull: always
+
+    - name: 推包
+      image: ccr.ccs.tencentyun.com/dronestock/docker
+      pull: always
+      privileged: true
+      volumes:
+          - name: docker
+            path: /var/lib/docker
+      environment:
+          PASSWORD_DOCKER:
+              from_secret: token_docker
+          PASSWORD_CCR:
+              from_secret: password_ccr
+      settings:
+          repository: $${GROUP}/$${MODULE}
+          platforms:
+              - arch: amd64
+              - arch: arm64
+              - arch: arm
+                variant: v7
+          registry:
+              hostname: ccr.ccs.tencentyun.com
+              username: "160290688"
+              password: $${PASSWORD_CCR}
+
+
+volumes:
+    - name: docker
+      host:
+          path: /var/lib/cache/docker

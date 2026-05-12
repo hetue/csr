@@ -15,11 +15,17 @@ ENV LIB_PATH=/var/lib/node \
 RUN set -ex && \
     apk update && \
     # 安装工具
-    apk --no-cache add nodejs npm git openssh-client && \
+    \
+    apk --no-cache add nodejs npm git && \
     # 配置依赖，安装大模型前端
+    \
     npm config set registry https://registry.npmmirror.com && \
     npm config set cache ${MODULE_PATH} && \
     npm install --global @anthropic-ai/claude-code && \
+    # 添加依赖脚本
+    wget --quiet --output-document=/usr/bin/log https://gitee.com/storezhang/script/raw/main/core/log.sh && \
+    chmod +x /usr/bin/log && \
+    \
     # 清理缓存
     npm cache clean --force && \
     rm -rf /var/cache/apk/* /tmp/* /root/.npm
