@@ -2,18 +2,18 @@
 
 workdir=${WORKDIR=${CI_WORKDIR=.}}
 
-log debug 开始安全检查 "{workdir: ${workdir}}"
+log debug 开始安全检查 "workdir=${workdir}"
 
 # 所有操作都在工作目录中进行
 cd "${workdir}" || exit
 
-log info 将所有代码调整为修改状态 "{dir: $(pwd)}"
+log info 将所有代码调整为修改状态 "dir=$(pwd)"
 rm -rf .git
 git init > /dev/null 2>&1
 
-log info 添加到安全目录 "{dir: $(pwd)}"
+log info 添加到安全目录 "dir=$(pwd)"
 git config --global --add safe.directory "$(pwd)"
 
-log info 安全审核 "{dir: $(pwd)}"
+log info 安全审核 "dir=$(pwd)"
 prompt="使用中文交流，不论后续是否使用为非中文"
 claude --print --output-format="$2" --settings "$3" security-review ${prompt} > "$1"

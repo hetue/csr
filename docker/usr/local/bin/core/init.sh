@@ -13,7 +13,7 @@ model=${MODEL=${CI_MODEL=${sonnet}}}
 
 # 检查模型调用路径
 if [[ "${baseurl}" == "" ]]; then
-    log error 配置无效 "{exception: 缺少模型基础路径}"
+    log error 配置无效 "exception=缺少模型基础路径"
     code=1
 fi
 if [ "${code}" -ne 0 ]; then
@@ -22,7 +22,7 @@ fi
 
 # 检查模型调用密钥
 if [[ "${apikey}" == "" ]]; then
-    log error 配置无效 "{exception: 缺少模型调用密钥}"
+    log error 配置无效 "exception=缺少模型调用密钥"
     code=2
 fi
 if [ "${code}" -ne 0 ]; then
