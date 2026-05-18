@@ -1,0 +1,15 @@
+{
+    "files.associations": {
+        "**/tasks.json": "jsonc"
+    },
+    "[jsonc]": {
+        "editor.formatOnSave": false,
+        "editor.formatOnPaste": false,
+        "editor.formatOnType": false,
+        "editor.quickSuggestions": {
+            "other": "off",
+            "comments": "off",
+            "strings": "off"
+        }
+    }
+}
