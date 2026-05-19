@@ -4,7 +4,7 @@ code=0
 
 baseurl=${BASEURL=${CI_BASEURL}}
 apikey=${APIKEY=${CI_APIKEY}}
-haiku=${HAIKU=${CI_HAIKU="claude-sonnet-4-6"}}
+haiku=${HAIKU=${CI_HAIKU="claude-haiku-4-5"}}
 sonnet=${SONNET=${CI_SONNET="claude-sonnet-4-6"}}
 opus=${OPUS=${CI_SONNET="claude-sonnet-4-6"}}
 reasoning=${REASONING=${CI_REASONING="claude-sonnet-4-6"}}

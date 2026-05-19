@@ -13,3 +13,6 @@ filename=$("${script}"/core/fixname.sh "${format}")
 
 # 安全审计
 "${script}"/core/review.sh "${filename}" "${format}" "${settings}"
+
+# 检查安全级别
+"${script}"/core/check.sh "${filename}"
