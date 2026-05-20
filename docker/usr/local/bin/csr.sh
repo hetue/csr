@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # 当前脚本路径
 script=$(cd "$(dirname "$0")" || exit; pwd)
@@ -17,8 +17,5 @@ filename=$("${script}"/core/fixname.sh "${format}")
 # 检查安全级别
 "${script}"/core/check.sh "${filename}"
 
-# 翻译（如果需要）
-"${script}"/core/translate.sh "${filename}"
-
-# 格式转换（如果需要）
-"${script}"/core/convert.sh "${filename}"
+# 翻译
+"${script}"/core/translate.sh "${filename}" "${settings}"

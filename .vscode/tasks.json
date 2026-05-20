@@ -2,17 +2,18 @@
   "version": "2.0.0",
   "options": {
     "env": {
+      "MSYS_NO_PATHCONV": "1",
       "CFG_USER": "storezhang",
       "CFG_REMOTE": "192.168.102.10",
       "CFG_IMAGE": "ccr.ccs.tencentyun.com/hetue/csr:latest",
       "CFG_CONTAINER": "${workspaceFolderBasename}-temp-container",
-      "CFG_REPOSITORY": "/home/storezhang/sichuancredit/qyzjl/ui",
+      "CFG_REPOSITORY": "${input:workdir}/${input:organization}/${input:project}/${input:module}",
       "CFG_FILEPATH": "/config/security.md",
-      "CFG_LOCAL_FILENAME": "security.md"
+      "CFG_LOCAL_FILENAME": "${input:module}.md"
     }
   },
   "tasks": [
-    {
+    { // 创建连接
       "label": "docker-context-create",
       "type": "shell",
       "command": "docker",
@@ -39,7 +40,7 @@
         "panel": "shared"
       }
     },
-    {
+    { // 打包镜像
       "label": "docker-build-execute",
       "type": "shell",
       "command": "docker",
@@ -81,24 +82,28 @@
       "command": "docker",
       "args": [
         "--context", "temp-remote-box",
-        "run","-d",
+        "run",
+        // "--detach", // 正常使用
+        "--tty", "--interactive", "--entrypoint", "/bin/sh", // 调试使用
         "--name", "$CFG_CONTAINER",
-        "--volume", "$CFG_REPOSITORY://config",
+        "--volume", "$CFG_REPOSITORY:/config",
         "--env-file", ".vscode/combined.tmp.env",
         "$CFG_IMAGE"
       ],
       "presentation": {
+        "echo": true,
         "reveal": "silent",
-        "panel": "shared"
+        "panel": "shared",
+        "focus": true
       }
     },
-    {
+    { // 复制文件到本地
       "label": "docker-container-cp",
       "type": "shell",
       "command": "bash",
         "args": [
           "-c",
-          "docker --context temp-remote-box logs -f $CFG_CONTAINER && docker --context temp-remote-box cp $CFG_CONTAINER:$CFG_FILEPAT $CFG_LOCAL_FILENAME"
+          "docker --context temp-remote-box logs -f $CFG_CONTAINER && docker --context temp-remote-box cp $CFG_CONTAINER:$CFG_FILEPATH $CFG_LOCAL_FILENAME"
       ],
       "presentation": {
         "reveal": "always",
@@ -180,6 +185,32 @@
         "panel": "shared",
         "focus": true
       }
+    }
+  ],
+  "inputs": [
+    {
+      "id": "project",
+      "type": "promptString",
+      "description": "请输入项目名",
+      "default": "qyzjl"
+    },
+    {
+      "id": "module",
+      "type": "promptString",
+      "description": "请输入需要扫描模块名",
+      "default": "security"
+    },
+    {
+      "id": "workdir",
+      "type": "promptString",
+      "description": "请输入工作目录",
+      "default": "/home/storezhang"
+    },
+    {
+      "id": "organization",
+      "type": "promptString",
+      "description": "请输入组织名称",
+      "default": "sichuancredit"
     }
   ],
   "runOptions": {

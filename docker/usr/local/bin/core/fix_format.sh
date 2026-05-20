@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 format=${FORMAT=${CI_FORMAT=text}}
 

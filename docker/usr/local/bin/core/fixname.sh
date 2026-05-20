@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 filename=${FILENAME=${CI_FILENAME=security}}
 
