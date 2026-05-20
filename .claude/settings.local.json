@@ -1,7 +1,12 @@
 {
   "permissions": {
     "allow": [
-      "Bash(rtk ls *)"
+      "Bash(rtk ls *)",
+      "Bash(rtk claude *)",
+      "Bash(claude security-review *)",
+      "Bash(chmod +x docker/usr/local/bin/core/translate.sh)",
+      "Bash(chmod +x docker/usr/local/bin/core/examples/translate_example.sh)",
+      "Bash(chmod +x docker/usr/local/bin/core/convert.sh)"
     ]
   }
 }

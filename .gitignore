@@ -23,6 +23,9 @@ vendor/
 scripts/
 node_modules/
 
+# 临时文件
+*tmp*
+
 # 私密文件
-*.secret
+*secret*
 *.private

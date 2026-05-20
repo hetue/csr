@@ -16,7 +16,16 @@ RUN set -ex && \
     apk update && \
     # 安装工具
     \
-    apk --no-cache add nodejs npm git && \
+    apk --no-cache add \
+      nodejs \
+      npm \
+      git \
+      pandoc \
+      texlive-xetex \
+      texmf-dist-latexrecommended \
+      texmf-dist-fontsrecommended \
+      fontconfig \
+      ttf-dejavu && \
     # 配置依赖，安装大模型前端
     \
     npm config set registry https://registry.npmmirror.com && \

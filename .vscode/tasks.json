@@ -66,7 +66,16 @@
         "panel": "shared"
       }
     },
-    {
+    { // 全自动合并公开和敏感文件
+      "label": "merge-env-files",
+      "type": "shell",
+      "command": "cat .vscode/*.env > .vscode/combined.tmp.env",
+      "presentation": {
+          "reveal": "silent",
+          "panel": "shared"
+      }
+    },
+    { // 启动容器
       "label": "docker-container-create",
       "type": "shell",
       "command": "docker",
@@ -75,8 +84,7 @@
         "run","-d",
         "--name", "$CFG_CONTAINER",
         "--volume", "$CFG_REPOSITORY://config",
-        "--env-file", ".vscode/env.secret",
-        "--env-file", ".vscode/env.model",
+        "--env-file", ".vscode/combined.tmp.env",
         "$CFG_IMAGE"
       ],
       "presentation": {
@@ -90,7 +98,7 @@
       "command": "bash",
         "args": [
           "-c",
-          "docker --context temp-remote-box logs -f ${env:CFG_CONTAINER} && docker --context temp-remote-box cp ${env:CFG_CONTAINER}:${env:CFG_FILEPATH} ${env:CFG_LOCAL_FILENAME}"
+          "docker --context temp-remote-box logs -f $CFG_CONTAINER && docker --context temp-remote-box cp $CFG_CONTAINER:$CFG_FILEPAT $CFG_LOCAL_FILENAME"
       ],
       "presentation": {
         "reveal": "always",
@@ -104,7 +112,7 @@
       "type": "shell",
       "command": "notepad",
       "args": [
-        "${env:CFG_LOCAL_FILENAME}"
+        "$CFG_LOCAL_FILENAME"
       ],
       "presentation": {
         "reveal": "always",
@@ -138,6 +146,18 @@
         "panel": "shared"
       }
     },
+    { // 删除环境变量文件
+        "label": "cleanup-env-file",
+        "type": "shell",
+        "command": "rm",
+        "args": [
+            "-f", "./.vscode/combined.tmp.env"
+        ],
+        "presentation": {
+            "reveal": "silent",
+            "panel": "shared"
+        }
+    },
     { // 总控制流流水线
       "label": "Remote Docker Build",
       "dependsOn": [
@@ -145,11 +165,13 @@
         "docker-context-init",
         "docker-build-execute",
         "pre-cleanup-container",
+        "merge-env-files",
         "docker-container-create",
         "docker-container-cp",
         "open-notepad-and-wait",
         "docker-container-rm",
-        "docker-context-rm"
+        "docker-context-rm",
+        "cleanup-env-file"
       ],
       "dependsOrder": "sequence",
       "group": "none",
