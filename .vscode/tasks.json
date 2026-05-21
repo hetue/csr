@@ -83,8 +83,8 @@
       "args": [
         "--context", "temp-remote-box",
         "run",
-        // "--detach", // 正常使用
-        "--tty", "--interactive", "--entrypoint", "/bin/sh", // 调试使用
+        "--detach", // 正常使用
+        // "--tty", "--interactive", "--entrypoint", "/bin/sh", // 调试使用
         "--name", "$CFG_CONTAINER",
         "--volume", "$CFG_REPOSITORY:/config",
         "--env-file", ".vscode/combined.tmp.env",

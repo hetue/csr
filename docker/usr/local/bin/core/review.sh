@@ -28,26 +28,20 @@ fi
 
 # 检查是否相同
 if [ "${source}" = "${target}" ]; then
-    log info 全量安全审核模式 "source=${source},target=${target}"
-
-    # 将所有代码调整为修改状态
-    rm -rf .git
-    if ! git init > /dev/null 2>&1; then
-        log warn git初始化失败 "dir=$(pwd)"
-    fi
-
-    prompt="使用中文进行安全审核，对当前目录下的所有代码进行全量安全审核。请确保所有的漏洞描述、风险等级、安全漏洞名称、危害分析、修复建议和总结都完全使用简体中文撰写。绝对不能输出任何英文的分析内容。"
+    log info 使用全量安全审核模式 "source=${source},target=${target}"
+    diff="$(git rev-list --max-parents=0 HEAD)"
 else
-    log info 差异安全审核模式 "source=${source},target=${target}"
+    log info 使用差异安全审核模式 "source=${source},target=${target}"
 
     # 确保分支存在
     if ! git fetch origin "${source}" > /dev/null 2>&1; then
         log warn 获取分支失败 "source=${source}"
     fi
-
-    prompt="使用中文进行安全审核，重点审核从 ${target} 分支到 ${source} 分支的代码变更部分。请确保所有的漏洞描述、风险等级、安全漏洞名称、危害分析、修复建议和总结都完全使用简体中文撰写。绝对不能输出任何英文的分析内容。"
+    diff="${source}..${target}"
 fi
 
+script=$(cd "$(dirname "$0")" || exit; pwd)
+prompt=$(cat "${script}/security-review.md")
 log info 安全审核开始 "dir=$(pwd)"
-claude --print --output-format="${output_format}" --settings "${settings}" security-review "${prompt}" > "${output_file}"
+git diff "${diff}" | claude --print --output-format="${output_format}" --settings "${settings}" security-review "${prompt}" > "${output_file}"
 log info 安全审核完成 "dir=$(pwd),filename=${output_file}"

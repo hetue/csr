@@ -16,6 +16,3 @@ filename=$("${script}"/core/fixname.sh "${format}")
 
 # 检查安全级别
 "${script}"/core/check.sh "${filename}"
-
-# 翻译
-"${script}"/core/translate.sh "${filename}" "${settings}"
