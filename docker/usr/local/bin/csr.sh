@@ -15,7 +15,7 @@ filename=$("${script}"/core/fixname.sh "${format}")
 "${script}"/core/review.sh "${filename}" "${format}" "${settings}"
 
 # 检查安全级别
-if "${script}"/core/check.sh "${filename}"; then
-  # 翻译
-  "${script}"/core/translate.sh "${filename}" "${settings}"
-fi
+"${script}"/core/check.sh "${filename}"
+
+# 翻译
+"${script}"/core/translate.sh "${filename}" "${settings}"
