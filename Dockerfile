@@ -21,7 +21,7 @@ RUN set -ex && \
     \
     npm config set registry https://registry.npmmirror.com && \
     npm config set cache ${MODULE_PATH} && \
-    npm install --global @anthropic-ai/claude-code && \
+    npm install --global @anthropic-ai/claude-code@latest && \
     # 添加依赖脚本
     wget --quiet --output-document=/usr/bin/log https://gitee.com/storezhang/script/raw/main/core/log.sh && \
     chmod +x /usr/bin/log && \

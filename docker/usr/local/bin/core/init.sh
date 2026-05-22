@@ -35,42 +35,57 @@ language="${language%%_*}"
 # 语言映射和验证
 case "${language}" in
   en|english|英文)
-    target_lang="english"
+    translate_english="English"
+    translate_chinese=英文
     ;;
   ja|japanese|日文|日语)
-    target_lang="japanese"
+    translate_english="Japanese"
+    translate_chinese=日文
     ;;
   ko|korean|韩文|韩语)
-    target_lang="korean"
+    translate_english="Korean"
+    translate_chinese=韩文
     ;;
   zh|chinese|中文)
-    target_lang="chinese"
+    translate_english="Chinese"
+    translate_chinese=中文
     ;;
   zh-cn|simplified|简体中文)
-    target_lang="simplified chinese"
+    translate_english="Simplified Chinese"
+    translate_chinese=简体中文
     ;;
   zh-tw|traditional|繁体中文)
-    target_lang="traditional chinese"
+    translate_english="Traditional Chinese"
+    translate_chinese=繁体中文
     ;;
   fr|french|法文|法语)
-    target_lang="french"
+    translate_english="French"
+    translate_chinese=法文
     ;;
   de|german|德文|德语)
-    target_lang="german"
+    translate_english="German"
+    translate_chinese=德文
     ;;
   es|spanish|西班牙文|西班牙语)
-    target_lang="spanish"
+    translate_english="Spanish"
+    translate_chinese=西班牙文
     ;;
   ru|russian|俄文|俄语)
-    target_lang="russian"
+    translate_english="Russian"
+    translate_chinese=俄文
     ;;
   *)
-    target_lang="chinese"
+    translate_english="Chinese"
+    translate_chinese=中文
     ;;
 esac
 
 # 创建临时目录
 mkdir --parent /tmp
+
+# 替换语言
+workdir=${WORKDIR=${CI_WORKDIR=.}}
+sed "s/\${translate_english}/$translate_english/g; s/\${translate_chinese}/$translate_chinese/g" /opt/dockerat/prompt/language.md > "${workdir}/CLAUDE.md"
 
 # 输出到控制台
 cat << EOF
@@ -89,7 +104,6 @@ cat << EOF
     "CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS": "true",
     "CLAUDE_CODE_DISABLE_NONSTREAMING_FALLBACK": "1",
     "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1"
-  },
-  "language": ${target_lang}
+  }
 }
 EOF

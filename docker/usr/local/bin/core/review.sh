@@ -40,7 +40,13 @@ else
     diff="${source}..${target}"
 fi
 
+# l
+
 prompt=$(cat "/opt/dockerat/prompt/security-review.md")
 log info 安全审核开始 "dir=$(pwd)"
 git diff "${diff}" | claude --print --output-format="${output_format}" --settings "${settings}" security-review "${prompt}" > "${output_file}"
 log info 安全审核完成 "dir=$(pwd),filename=${output_file}"
+
+# 清理过程文件
+log info 清理过程文件 "dir=$(pwd)"
+rm -f CLAUDE.md
