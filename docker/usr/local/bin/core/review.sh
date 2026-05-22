@@ -40,8 +40,7 @@ else
     diff="${source}..${target}"
 fi
 
-script=$(cd "$(dirname "$0")" || exit; pwd)
-prompt=$(cat "${script}/security-review.md")
+prompt=$(cat "/opt/dockerat/prompt/security-review.md")
 log info 安全审核开始 "dir=$(pwd)"
 git diff "${diff}" | claude --print --output-format="${output_format}" --settings "${settings}" security-review "${prompt}" > "${output_file}"
 log info 安全审核完成 "dir=$(pwd),filename=${output_file}"
