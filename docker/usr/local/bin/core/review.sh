@@ -25,7 +25,7 @@ if ! git rev-parse --git-dir > /dev/null 2>&1; then
     log warn 非代码仓库目录 "dir=$(pwd)"
 else
     log debug 切换分支 "source=${from},target=${to}"
-    if ! git switch "${to}" > /dev/null 2>&1; then
+    if ! git switch "${source}" > /dev/null 2>&1; then
         log warn 切换分支失败 "target=${target}"
     fi
 fi
